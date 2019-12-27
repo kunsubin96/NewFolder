@@ -28,6 +28,7 @@ io.on("connection", function (socket) {
         avatar: socket.handshake.query.useravatar || null,
         date: new Date()
     };
+    
     pushUser(roomid, user);
     //sync data with new connected
     socket.emit('connection', getRoom(roomid));
@@ -86,7 +87,7 @@ function getRoom(roomid) {
     return {};
 }
 function sendRoom(roomid, key, data) {
-    this._io_namespace.to(roomid).emit(key, data);
+    io.sockets.in(roomid).emit(key, data);
 }
 //connection
 function counterConnection(roomid, i) {
